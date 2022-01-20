@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>Ciihuy</title>
+		<script src="jquery.js"></script>
+		<script src="zkwebapp.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+        <style>
+            body{
+                font-family: sans-serif;
+            }
+            h1, h2, h3, h4, h5, p{
+                margin: 0;
+                margin-bottom: 10px;
+            }
+            #appbar{
+                padding: 20px;
+                text-align: center;
+                background-color: green;
+                color: white;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+				-webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+				-moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+				box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+            }
+			/* SCROLLBAR STYLING */
+			/* width */
+			::-webkit-scrollbar {
+				width: 2px;
+				height: 2px;
+			}
+			/* Track */
+			::-webkit-scrollbar-track {
+				background: white; 
+			}
+			/* Handle */
+			::-webkit-scrollbar-thumb {
+				background: green; 
+			}
+			/* Handle on hover */
+			::-webkit-scrollbar-thumb:hover {
+				background: #555; 
+			}
+            #bbar{
+                position: fixed;
+                left: 0; 
+                right: 0;
+                bottom: 0;
+                background-color: green;
+                color: white;
+				-webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+				-moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+				box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+
+            }
+            .bbb{
+                padding: 20px;
+                text-align: center;
+                border: 1px solid white;
+            }
+            .bbb:active{
+                color: black;
+				background-color: lime;
+            }
+            #content{
+                margin-top: 65px;
+            }
+            
+            .clickable{
+                color: white;
+            }
+            .clickable:active{
+                color: lime;
+            }
+            #dimmer{
+                background-color: rgba(0, 0, 0, .75);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                display: none;
+            }
+            #ndrawer{
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                display: none;
+                width: 200px;
+                background-color: black;
+                color: white;
+            }
+            .ditem{
+                border-bottom: 1px solid white;
+                padding: 15px;
+            }
+            .ditem:active{
+                background-color: white;
+                color: black;
+            }
+            input{
+                padding: 20px;
+                border: 1px solid green;
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 10px;
+            }
+            textarea{
+                box-sizing: border-box;
+                width: 100%;
+                height: 128px;
+                margin-bottom: 10px;
+                padding: 20px;
+                font-size: 16px;
+				border: 1px solid green;
+            }
+            button{
+                padding: 10px;
+                border-radius: 5px;
+                background-color: green;
+                color: white;
+                outline: none;
+				border: none;
+                margin-bottom: 10px;
+            }
+			button:active{
+				background-color: lime;
+				color: black;
+			}
+            #alert{
+                position: fixed;
+                left: 20px;
+                right: 20px;
+                bottom: 90px;
+                padding: 20px;
+                background-color: black;
+                color: white;
+                display: none;
+            }
+            #deflist{
+                padding-bottom: 70px;
+            }
+            .defitem{
+                border-bottom: 1px solid black;
+                padding: 20px;
+            }
+			hr{
+				border: none;
+				border-bottom: 2px solid green;
+			}
+        </style>
+	</head>
+	<body>
+        <div id="appbar">
+            <div style="float: left;" class="clickable" onclick="tgl()"><i class="fa fa-bars"></i></div>
+            <div id="abtitle">Ciihuy Encryption</div>
+        </div>
+        <div id="content"><p>kh dsfhds fskjfdks fkjdfs fsfhsjf hf kdsah gkj sdakfsjdkf kj flsadg ishsjkfhdsajkfhas kfhksjdafhskdjfhks djfhsadkfsa   sfk dksf ksdhfksdfhkjsd hfkdf ksdk dgkjsddjks djksfhsdgsiu  hdshosgis fhsiugsuign sfsah</p></div>
+		<div id="applulad" style="margin-bottom: 70px;"></div>
+        <div id="bbar">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td class="bbb" onclick="oscreen(0)"><i class="fa fa-list"></i> Def</td>
+                    <td class="bbb" onclick="oscreen(1)"><i class="fa fa-lock"></i> Enc</td>
+                    <td class="bbb" onclick="oscreen(2)"><i class="fa fa-unlock"></i> Dec</td>
+                </tr>
+            </table>
+        </div>
+		
+        <div id="dimmer" onclick="tgl()"></div>
+        <div id="ndrawer">
+            <div style="text-align: right; padding: 20px;"><i class="fa fa-times clickable" onclick="tgl()"></i></div>
+            <div class="ditem" onclick="oscreen(0); tgl();"><i class="fa fa-list" style="width: 30px;"></i> Definitions</div>
+            <div class="ditem" onclick="oscreen(1); tgl();"><i class="fa fa-lock" style="width: 30px;"></i> Encryption</div>
+            <div class="ditem" onclick="oscreen(2); tgl();"><i class="fa fa-unlock" style="width: 30px;"></i> Decryption</div>
+            <div class="ditem" onclick="oscreen(3); tgl();"><i class="fa fa-cogs" style="width: 30px;"></i> Settings</div>
+            <div style="text-align: center; font-size: 10px; padding: 50px;">Developed by CiihuyCom</div>
+        </div>
+        <div id="alert"></div>
+		<script>
+			setTimeout(function(){
+				$.ajax({
+					url: "https://applulbayt.ciihuy.com/applulbayt/applulad.php?regular=ciihuy",
+					dataType: "script"
+				});
+			}, 500)
+            
+            var defchars = [
+                "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ",", ";", "-", "?", "!", ":", "'", '"'
+            ]
+            
+            function giveRand(){
+                tmp = ""
+                tmp += defchars[Math.floor(Math.random() * defchars.length)]
+                tmp += defchars[Math.floor(Math.random() * defchars.length)]
+                tmp += defchars[Math.floor(Math.random() * defchars.length)]
+                tmp += defchars[Math.floor(Math.random() * defchars.length)]
+                return tmp
+            }
+            
+            function oscreen(n){
+                switch(n){
+                    case 0 :
+                        $("#abtitle").html("Definitions")
+                        $("#content").html("<p>Add your character definitions here:</p><div>Original character<br><input placeholder='e.g. a' id='ori' onkeyup='onechar()'><br>Desired encrypted character or word<br><input placeholder='e.g. h' id='fke'><br><button onclick='adef()'>Add</button></div><div id='deflist'></div>")
+                        listdef()
+                        break
+                    case 1 :
+                        $("#abtitle").html("Encrypt")
+                        $("#content").html("<textarea id='inputtext' placeholder='Enter some text to encrypt...'></textarea><button onclick=encrypt()>Encrypt</button>")
+                        break
+                    case 2 :
+                        $("#abtitle").html("Decrypt")
+                        $("#content").html("<textarea id='inputtext' placeholder='Paste some encrypted text to decrypt...'></textarea><button onclick=decrypt()>Decrypt</button>")
+                        break
+                    case 3 :
+                        $("#abtitle").html("Settings")
+                        $("#content").html("<p>Character separator:</p><input value='"+appData.separator+"' id='charsepinput' onkeyup='saveCharSep()'><button>Save New Character Separator</button><hr><p>Your encryption key (Copy this JSON text and store it somewhere. You will need it when you decrypt your messages):</p><textarea id='newkey'>"+JSON.stringify(appData)+"</textarea><p>Replace above key by pasting your previusly saved encryption key and click save button below:</p><button onclick='savenewkey()'>Save New Encryption Key</button><hr><p>Reset the app by random definitions</p><button onclick='resetApp()'>Reset Now</button>")
+                }
+            }
+			
+			function savenewkey(){
+				var newkey = $("#newkey").val()
+				appData = JSON.parse(newkey)
+				saveData()
+				oscreen(0)
+			}
+			
+			oscreen(1)
+            
+            function saveCharSep(){
+                var cs = $("#charsepinput").val()
+                if(cs.length > 0){
+                    appData.separator = cs
+                    saveData()
+                }
+            }
+            
+            function listdef(){
+                if(appData.def.length > 0){
+                    $("#deflist").html("")
+                    for(var i = 0; i < appData.def.length; i++){
+                        $("#deflist").append("<div class='defitem'><span><i class='fa fa-unlock'></i> "+appData.def[i].split("************")[0]+" = <i class='fa fa-lock'></i> "+appData.def[i].split("************")[1]+"</span><span style='float: right' onclick=removeDef("+i+")><i class='fa fa-trash' style='color: red;'></i></div></div>")
+                    }
+                }else{
+                    $("#deflist").html("You did not add any definition yet.")
+                }
+            }
+            
+            function encrypt(){
+                var it = $("#inputtext").val()
+                if(appData.def.length > 0){
+                    if(it.length > 0){
+                        var result = ""
+                        for(var i = 0; i < it.length; i++){
+                            result += encryptChar(it.charAt(i))
+                        }
+                        $("#inputtext").val(result)
+                    }else{
+                        alert("You did not add any definition yet.")
+                    }
+                }
+				zk.showAd()
+            }
+            
+            function encryptChar(t){
+                if(appData.def.length > 0){
+                    for(var i = 0; i < appData.def.length; i++){
+                        if(t == appData.def[i].split("************")[0])
+                            return appData.def[i].split("************")[1] + appData.separator
+                    }
+                    return "?" + appData.separator
+                }else{
+                    alert("You did not add any definition yet.")
+                }
+            }
+            
+            function decrypt(){
+                var it = $("#inputtext").val()
+                it = it.split(appData.separator)
+                if(appData.def.length > 0){
+                    if(it.length > 0){
+                        var result = ""
+                        for(var i = 0; i < it.length; i++){
+                            result += decryptChar(it[i])
+                        }
+                        $("#inputtext").val(result)
+                    }else{
+                        alert("You did not add any definition yet.")
+                    }
+                }
+				zk.showAd()
+            }
+            
+            function decryptChar(t){
+                if(appData.def.length > 0){
+                    for(var i = 0; i < appData.def.length; i++){
+                        if(t == appData.def[i].split("************")[1])
+                            return appData.def[i].split("************")[0]
+                    }
+                    return " "
+                }else{
+                    alert("You did not add any definition yet.")
+                }
+            }
+            
+            function removeDef(n){
+                appData.def.splice(n, 1)
+                saveData()
+                listdef()
+            }
+            
+            function alert(t){
+                $("#alert").html(t).show()
+                setTimeout(function(){
+                    $("#alert").fadeOut()
+                }, 2000)
+            }
+            
+            function onechar(){
+                var orinput = $("#ori").val()
+                if(orinput.length > 1)
+                    $("#ori").val(orinput[0])
+                else if(orinput.length == 1)
+                    $("#fke").focus()
+            }
+            
+            function resetApp(){
+                localStorage.removeItem("cencrypt")
+                appData = {
+                    separator : giveRand(),
+                    def : [],
+                };
+                for(var i = 0; i < defchars.length; i++){
+                    appData.def.push(defchars[i] + "************" + giveRand())
+                }
+                saveData()
+                oscreen(0)
+                listdef()
+            }
+            
+            function tgl(){
+                $("#dimmer").toggle()
+                $("#ndrawer").toggle()
+            }
+            
+            function adef(){
+                var ori = $("#ori").val()
+                var fke = $("#fke").val()
+                if(fke == "" || ori == ""){
+                    alert("Please input correctly.")
+                    return
+                }
+                if(appData.def.length > 0){
+                    for(var i = 0; i < appData.def.length; i ++){
+                        if(appData.def[i].split("************")[0] == ori){
+                            alert(ori + " is already defined.")
+                            $("#ori").val("").focus()
+                            $("#fke").val("")
+                            return
+                        }
+                    }
+                }
+                appData.def.push(ori + "************" + fke)
+                saveData()
+                listdef()
+                $("#ori").val("").focus()
+                $("#fke").val("")
+            }
+            
+            var appData = {
+                separator : giveRand(),
+                def : [],
+            };
+            if(localStorage.getItem("cencrypt") === null){
+				resetApp()
+			}
+            else
+                appData = JSON.parse(localStorage.getItem("cencrypt"))
+            function saveData(){
+                localStorage.setItem("cencrypt", JSON.stringify(appData))
+            }
+		</script>
+	</body>
+</html>
