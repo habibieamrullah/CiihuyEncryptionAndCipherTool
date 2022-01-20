@@ -7,4 +7,4 @@ I can't explain it well, just try it and watch the video below:
 
 Demo Android App: https://play.google.com/store/apps/details?id=com.ciihuy.encryption
 
-YouTube video: coming soon
+YouTube video: https://youtu.be/7ZHHdT_ULJE
