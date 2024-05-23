@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<title>Ciihuy</title>
 		<script src="jquery.js"></script>
-		<script src="zkwebapp.js"></script>
+
 		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <style>
             body{
@@ -157,10 +157,13 @@
         </style>
 	</head>
 	<body>
+	
         <div id="appbar">
             <div style="float: left;" class="clickable" onclick="tgl()"><i class="fa fa-bars"></i></div>
+            <div style="float: right;" class="clickable" onclick="oscreen(4)"><i class="fa fa-info"></i></div>
             <div id="abtitle">Ciihuy Encryption</div>
         </div>
+		
         <div id="content"><p>kh dsfhds fskjfdks fkjdfs fsfhsjf hf kdsah gkj sdakfsjdkf kj flsadg ishsjkfhdsajkfhas kfhksjdafhskdjfhks djfhsadkfsa   sfk dksf ksdhfksdfhkjsd hfkdf ksdk dgkjsddjks djksfhsdgsiu  hdshosgis fhsiugsuign sfsah</p></div>
 		
         <div id="bbar">
@@ -180,11 +183,13 @@
             <div class="ditem" onclick="oscreen(1); tgl();"><i class="fa fa-lock" style="width: 30px;"></i> Encryption</div>
             <div class="ditem" onclick="oscreen(2); tgl();"><i class="fa fa-unlock" style="width: 30px;"></i> Decryption</div>
             <div class="ditem" onclick="oscreen(3); tgl();"><i class="fa fa-cogs" style="width: 30px;"></i> Settings</div>
+			<div class="ditem" onclick="oscreen(4); tgl();"><i class="fa fa-info" style="width: 30px;"></i> About App</div>
             <div style="text-align: center; font-size: 10px; padding: 50px;">Developed by CiihuyCom</div>
         </div>
         <div id="alert"></div>
 		<script>
-		    
+			
+            
             var defchars = [
                 "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ",", ";", "-", "?", "!", ":", "'", '"'
             ]
@@ -216,6 +221,10 @@
                     case 3 :
                         $("#abtitle").html("Settings")
                         $("#content").html("<p>Character separator:</p><input value='"+appData.separator+"' id='charsepinput' onkeyup='saveCharSep()'><button>Save New Character Separator</button><hr><p>Your encryption key (Copy this JSON text and store it somewhere. You will need it when you decrypt your messages):</p><textarea id='newkey'>"+JSON.stringify(appData)+"</textarea><p>Replace above key by pasting your previusly saved encryption key and click save button below:</p><button onclick='savenewkey()'>Save New Encryption Key</button><hr><p>Reset the app by random definitions</p><button onclick='resetApp()'>Reset Now</button>")
+						break
+					case 4 :
+                        $("#abtitle").html("About App")
+                        $("#content").html("<h3>About App</h3><p>You can make your own definitions by making an equivalent character or word for each alphabet then you can type some text and convert it to your own cipher encrypted message so no one but you can read it unless they know your definitions.</p>")
                 }
             }
 			
@@ -240,7 +249,7 @@
                 if(appData.def.length > 0){
                     $("#deflist").html("")
                     for(var i = 0; i < appData.def.length; i++){
-                        $("#deflist").append("<div class='defitem'><span><i class='fa fa-unlock'></i> "+appData.def[i].split("************")[0]+" = <i class='fa fa-lock'></i> "+appData.def[i].split("************")[1]+"</span><span style='float: right' onclick=removeDef("+i+")><i class='fa fa-trash' style='color: red;'></i></div></div>")
+                        $("#deflist").append("<div class='defitem'><span><i class='fa fa-unlock'></i> "+appData.def[i].split("*#*")[0]+" = <i class='fa fa-lock'></i> "+appData.def[i].split("*#*")[1]+"</span><span style='float: right' onclick=removeDef("+i+")><i class='fa fa-trash' style='color: red;'></i></div></div>")
                     }
                 }else{
                     $("#deflist").html("You did not add any definition yet.")
@@ -260,14 +269,16 @@
                         alert("You did not add any definition yet.")
                     }
                 }
-				zk.showAd()
+				
+				
+				
             }
             
             function encryptChar(t){
                 if(appData.def.length > 0){
                     for(var i = 0; i < appData.def.length; i++){
-                        if(t == appData.def[i].split("************")[0])
-                            return appData.def[i].split("************")[1] + appData.separator
+                        if(t == appData.def[i].split("*#*")[0])
+                            return appData.def[i].split("*#*")[1] + appData.separator
                     }
                     return "?" + appData.separator
                 }else{
@@ -289,14 +300,14 @@
                         alert("You did not add any definition yet.")
                     }
                 }
-				zk.showAd()
+				
             }
             
             function decryptChar(t){
                 if(appData.def.length > 0){
                     for(var i = 0; i < appData.def.length; i++){
-                        if(t == appData.def[i].split("************")[1])
-                            return appData.def[i].split("************")[0]
+                        if(t == appData.def[i].split("*#*")[1])
+                            return appData.def[i].split("*#*")[0]
                     }
                     return " "
                 }else{
@@ -332,7 +343,7 @@
                     def : [],
                 };
                 for(var i = 0; i < defchars.length; i++){
-                    appData.def.push(defchars[i] + "************" + giveRand())
+                    appData.def.push(defchars[i] + "*#*" + giveRand())
                 }
                 saveData()
                 oscreen(0)
@@ -353,7 +364,7 @@
                 }
                 if(appData.def.length > 0){
                     for(var i = 0; i < appData.def.length; i ++){
-                        if(appData.def[i].split("************")[0] == ori){
+                        if(appData.def[i].split("*#*")[0] == ori){
                             alert(ori + " is already defined.")
                             $("#ori").val("").focus()
                             $("#fke").val("")
@@ -361,7 +372,7 @@
                         }
                     }
                 }
-                appData.def.push(ori + "************" + fke)
+                appData.def.push(ori + "*#*" + fke)
                 saveData()
                 listdef()
                 $("#ori").val("").focus()
